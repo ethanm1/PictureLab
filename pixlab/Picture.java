@@ -126,7 +126,6 @@ public class Picture extends SimplePicture
   {
       zeroRed();
       zeroGreen();
-      
   }
      public void Negate()
   {
@@ -145,6 +144,22 @@ public class Picture extends SimplePicture
            }
         }
   }
+    public void Grayscale()
+    {
+        Pixel[][] image = this.getPixels2D();
+        for(Pixel[] row: image)
+         {  for(Pixel g: row)
+             {
+                int red = g.getRed();
+                int blue = g.getBlue();
+                int green = g.getGreen();
+                int avg=(red+blue+green)/3;
+                g.setBlue(avg);
+                g.setRed(avg);
+                g.setGreen(avg);
+             }        
+         }  
+   }
   /** Method that mirrors the picture around a 
     * vertical mirror in the center of the picture
     * from left to right */
@@ -249,9 +264,27 @@ public class Picture extends SimplePicture
         rightPixel = pixels[row]                       
                          [mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
+        count++;
       }
+      System.out.println(count);
     }
   }
+    public void mirrorArms()
+    {
+        Pixel[][] pixels = this.getPixels2D();
+        Pixel topPixel;
+        Pixel botPixel;
+        int length = pixels.length;
+        for(int row = 0; row<158;row++)
+        {
+            for(int col=0; col<198; col++)
+            {
+                topPixel = pixels[row][col];
+                botPixel = pixels [length-1-row][col];
+                botPixel.setColor(topPixel.getColor());
+            }
+        }
+    }
   
   /** copy from the passed fromPic to the
     * specified startRow and startCol in the
